@@ -1,13 +1,13 @@
 const router = require('express').Router();
 let Business = require('../models/business');
 
-router.route('/Business').get((req,res) => {
+router.get('/Business',(req,res) => {
     Business.find()
         .then(businesses => res.json(businesses))
         .catch(err => res.status(400).json('Error: ' +err));
 });
 
-router.route('/addBusiness').post((req,res) => {
+router.post('/addBusiness',(req,res) => {
     const id = req.body.id
     const name = req.body.name;
     const email = req.body.email;

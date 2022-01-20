@@ -7,7 +7,7 @@ const {JWT_SECRET} = require('../config/keys');
 const requireLogin = require("../middleware/requireLogin");
 const User = mongoose.model('User')
 
-router.route('/Users').get((req,res) => {
+router.get('/Users',(req,res) => {
     User.find()
         .then(Users => res.json(Users))
         .catch(err => res.status(400).json('Error: ' +err));

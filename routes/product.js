@@ -1,13 +1,13 @@
 const router = require('express').Router();
 let Product = require('../models/product');
 
-router.route('/').get((req,res) => {
+router.get('/',(req,res) => {
     Product.find()
         .then(products => res.json(products))
         .catch(err => res.status(400).json('Error: ' +err));
 });
 
-router.route('/addProduct').post((req,res) => {
+router.post('/addProduct',(req,res) => {
     const id = req.body.id
     const name = req.body.name;
     const mrp = req.body.mrp;
@@ -24,13 +24,13 @@ router.route('/addProduct').post((req,res) => {
 
 
 
-router.route('/:id').delete((req,res) => {
+router.delete('/:id',(req,res) => {
     Product.findByIdAndDelete(req.params.id)
         .then(product => res.json('Product deleted'))
         .catch(err => res.status(400).json('Error: '+err));
 });
 
-router.route('/update/:id').post((req,res) => {
+router.post('/update/:id',(req,res) => {
     Product.findById(req.params.id)
         .then(product => {
             product.name = req.body.name;
