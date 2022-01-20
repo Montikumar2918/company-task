@@ -31,13 +31,15 @@ mongoose
 
 
   require('./models/user')
-  require('./models/exercise')
+  require('./models/product')
+  require('./models/business')
  
   const requireLogin = require("./middleware/requireLogin");
 
   app.use(express.json())
   app.use(require('./routes/auth'))
-  app.use(require('./routes/exercise'))
+  app.use(require('./routes/product'))
+  app.use(require('./routes/business'))
  
   app.get('/',requireLogin,(req,res)=>{
     res.send({email:req.user.email})

@@ -7,12 +7,16 @@ const {JWT_SECRET} = require('../config/keys');
 const requireLogin = require("../middleware/requireLogin");
 const User = mongoose.model('User')
 
-
+router.route('/Users').get((req,res) => {
+    User.find()
+        .then(Users => res.json(Users))
+        .catch(err => res.status(400).json('Error: ' +err));
+});
 
 router.post('/register',(req,res)=>{
-    const {name,email,password} = req.body
+    const {name,email,password,bio,profilePic} = req.body
     
-    if(!email || !name || !password){
+    if(!email || !name || !password || !bio || !profilePic){
         return res.status(422).json({error: "please enter valid credentials"})
     }
     User.findOne({email:email})
@@ -25,7 +29,9 @@ router.post('/register',(req,res)=>{
             const user = new User({
                 email,
                 password : hashedpassword,
-                name
+                name,
+                bio,  
+                profilePic
             })
             user.save()
             .then(user=>{
