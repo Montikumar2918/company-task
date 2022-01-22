@@ -1,6 +1,8 @@
+const express = require('express');
+require("dotenv").config();
 
-const express = require('express')
-const PORT = 3002
+
+
 
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -8,6 +10,8 @@ const mongoose = require('mongoose');
 const app = express()
 const cors=require('cors');
 app.use(cors());
+
+const PORT = process.env.PORT || "3002";
 
 app.use(bodyParser.urlencoded({ extended: false }));
 //mongodb+srv://Monti:Monti123@cluster0.s8bd8.mongodb.net/task?retryWrites=true&w=majority
@@ -21,8 +25,8 @@ mongoose
         }
     )
   .then(result => {
-    app.listen(PORT,()=>{
-        console.log("server is running on ",PORT)
+    app.listen(process.env.PORT ,()=>{
+        console.log(`Server started successfully at ${process.env.PORT}`);
     })
   })
   .catch(err => {
@@ -30,16 +34,16 @@ mongoose
   });
 
 
-  require('./models/user')
-  require('./models/product')
-  require('./models/business')
+  require('./Models/user')
+  require('./Models/product')
+  require('./Models/business')
  
-  const requireLogin = require("./middleware/requireLogin");
+  const requireLogin = require("./Middleware/requireLogin");
 
   app.use(express.json())
-  app.use(require('./routes/auth'))
-  app.use(require('./routes/product'))
-  app.use(require('./routes/business'))
+  app.use(require('./Routes/auth'))
+  app.use(require('./Routes/product'))
+  app.use(require('./Routes/business'))
  
   app.get('/',requireLogin,(req,res)=>{
     res.send({email:req.user.email})
