@@ -1,6 +1,6 @@
 
 const express = require('express')
-//const PORT = 3002
+//const PORT = 5000
 
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -21,7 +21,7 @@ mongoose
         }
     )
   .then(result => {
-    app.listen(process.env.PORT,()=>{
+    app.listen(process.env.PORT || 5000,()=>{
         console.log("server is running on ",PORT)
     })
   })
